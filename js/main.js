@@ -244,6 +244,7 @@
 
   // Open modal when any "Buy Now" button is clicked
   document.querySelectorAll('.book-buy-btn').forEach(function (btn) {
+    btn.dataset.bound = '1';
     btn.addEventListener('click', function () {
       openModal(
         btn.getAttribute('data-title'),
@@ -347,5 +348,56 @@
 
   // Initial render
   renderQuestion(0);
+
+  /* ── Admin books – dynamic rendering ──────────────────── */
+  (function loadAdminBooks () {
+    var STORAGE_KEY   = 'hemeonc_admin_books';
+    var VALID_STYLES  = ['1','2','3','4','5','6','7','8'];
+    var booksGrid     = document.querySelector('.books-grid');
+    if (!booksGrid) return;
+
+    var adminBooks;
+    try {
+      adminBooks = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    } catch (e) {
+      adminBooks = [];
+    }
+    if (!adminBooks.length) return;
+
+    adminBooks.forEach(function (book) {
+      var coverStyle = VALID_STYLES.indexOf(String(book.coverStyle)) !== -1
+        ? String(book.coverStyle) : '1';
+      var card = document.createElement('div');
+      card.className = 'book-card';
+      card.innerHTML =
+        '<div class="book-cover book-cover-' + coverStyle + '">' +
+          '<span class="book-cover-icon">' + escapeHtml(book.coverIcon || '📘') + '</span>' +
+        '</div>' +
+        '<div class="book-info">' +
+          '<span class="book-tag">' + escapeHtml(book.category) + '</span>' +
+          '<h3 class="book-title">' + escapeHtml(book.title) + '</h3>' +
+          '<p class="book-description">' + escapeHtml(book.description) + '</p>' +
+          '<div class="book-meta">' +
+            '<span class="book-price">' + escapeHtml(book.price) + '</span>' +
+            (book.pages
+              ? '<span class="book-pages">' + escapeHtml(book.pages) + '</span>'
+              : '') +
+          '</div>' +
+          '<button class="btn btn-primary btn-block book-buy-btn"' +
+            ' data-title="' + escapeHtml(book.title) + '"' +
+            ' data-price="' + escapeHtml(book.price) + '">Buy Now</button>' +
+        '</div>';
+      booksGrid.appendChild(card);
+    });
+
+    // Attach buy-button listeners to the newly added cards
+    booksGrid.querySelectorAll('.book-buy-btn').forEach(function (btn) {
+      if (btn.dataset.bound) return;
+      btn.dataset.bound = '1';
+      btn.addEventListener('click', function () {
+        openModal(btn.getAttribute('data-title'), btn.getAttribute('data-price'));
+      });
+    });
+  })();
 
 })();
