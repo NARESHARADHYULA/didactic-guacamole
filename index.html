@@ -24,6 +24,7 @@
           <li><a href="#features" class="nav-link">Features</a></li>
           <li><a href="#sample" class="nav-link">Sample Questions</a></li>
           <li><a href="#pricing" class="nav-link">Membership</a></li>
+          <li><a href="#books" class="nav-link">Books</a></li>
           <li><a href="#faq" class="nav-link">FAQ</a></li>
           <li><a href="#about" class="nav-link">About</a></li>
         </ul>
@@ -399,6 +400,168 @@
     </div>
   </section>
 
+  <!-- ===== BOOKS ===== -->
+  <section class="section books bg-light" id="books">
+    <div class="container">
+      <div class="section-header">
+        <h2>Books &amp; Study Guides</h2>
+        <p>Comprehensive reference books and study guides written by Dr. Ravin Garg to deepen your knowledge and ace your boards.</p>
+      </div>
+      <div class="books-grid">
+
+        <div class="book-card">
+          <div class="book-cover book-cover-1">
+            <span class="book-cover-icon">📘</span>
+          </div>
+          <div class="book-info">
+            <span class="book-tag">Benign Hematology</span>
+            <h3 class="book-title">Benign Hematology Essentials</h3>
+            <p class="book-description">A concise, high-yield reference covering iron deficiency, hemoglobinopathies, coagulopathies, and DVT/PE management — ideal for fellows and attending physicians.</p>
+            <div class="book-meta">
+              <span class="book-price">£32.99</span>
+              <span class="book-pages">320 pages · Paperback</span>
+            </div>
+            <button class="btn btn-primary btn-block book-buy-btn"
+                    data-title="Benign Hematology Essentials"
+                    data-price="£32.99">Buy Now</button>
+          </div>
+        </div>
+
+        <div class="book-card">
+          <div class="book-cover book-cover-2">
+            <span class="book-cover-icon">📕</span>
+          </div>
+          <div class="book-info">
+            <span class="book-tag">Malignant Hematology</span>
+            <h3 class="book-title">Malignant Hematology: Board Review</h3>
+            <p class="book-description">Deep-dive coverage of AML, CLL, myeloma, lymphomas, and transplant indications with the latest molecular targets and therapeutic algorithms.</p>
+            <div class="book-meta">
+              <span class="book-price">£38.99</span>
+              <span class="book-pages">410 pages · Paperback</span>
+            </div>
+            <button class="btn btn-primary btn-block book-buy-btn"
+                    data-title="Malignant Hematology: Board Review"
+                    data-price="£38.99">Buy Now</button>
+          </div>
+        </div>
+
+        <div class="book-card">
+          <div class="book-cover book-cover-3">
+            <span class="book-cover-icon">📗</span>
+          </div>
+          <div class="book-info">
+            <span class="book-tag">Solid Tumors</span>
+            <h3 class="book-title">Solid Tumor Oncology Guide</h3>
+            <p class="book-description">Comprehensive solid tumour oncology reference — lung, breast, GI, GU, and CNS cancers with up-to-date immunotherapy and targeted therapy sections.</p>
+            <div class="book-meta">
+              <span class="book-price">£35.99</span>
+              <span class="book-pages">380 pages · Paperback</span>
+            </div>
+            <button class="btn btn-primary btn-block book-buy-btn"
+                    data-title="Solid Tumor Oncology Guide"
+                    data-price="£35.99">Buy Now</button>
+          </div>
+        </div>
+
+        <div class="book-card">
+          <div class="book-cover book-cover-4">
+            <span class="book-cover-icon">📙</span>
+          </div>
+          <div class="book-info">
+            <span class="book-tag">Complete Collection</span>
+            <h3 class="book-title">HemeOnc Board Prep Bundle</h3>
+            <p class="book-description">All three volumes in one bundle — the ultimate board exam preparation set covering benign haematology, malignant haematology, and solid tumour oncology.</p>
+            <div class="book-meta">
+              <span class="book-price">£89.99</span>
+              <span class="book-pages">3 volumes · Paperback</span>
+            </div>
+            <button class="btn btn-primary btn-block book-buy-btn"
+                    data-title="HemeOnc Board Prep Bundle"
+                    data-price="£89.99">Buy Now</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ORDER MODAL ===== -->
+  <div class="modal-overlay" id="order-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <div class="modal-box">
+      <button class="modal-close" id="modal-close" aria-label="Close order form">&times;</button>
+      <h2 class="modal-title" id="modal-title">Order Book</h2>
+      <p class="modal-book-name" id="modal-book-name"></p>
+
+      <form class="order-form" id="order-form" novalidate>
+        <fieldset>
+          <legend>Quantity</legend>
+          <div class="form-group">
+            <label for="order-qty">Number of copies</label>
+            <input type="number" id="order-qty" name="quantity" min="1" max="99" value="1" required />
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Postage Details (United Kingdom)</legend>
+
+          <div class="form-group">
+            <label for="order-name">Full Name <span aria-hidden="true">*</span></label>
+            <input type="text" id="order-name" name="fullName" autocomplete="name" required placeholder="e.g. Jane Smith" />
+          </div>
+
+          <div class="form-group">
+            <label for="order-addr1">Address Line 1 <span aria-hidden="true">*</span></label>
+            <input type="text" id="order-addr1" name="addressLine1" autocomplete="address-line1" required placeholder="House number and street name" />
+          </div>
+
+          <div class="form-group">
+            <label for="order-addr2">Address Line 2</label>
+            <input type="text" id="order-addr2" name="addressLine2" autocomplete="address-line2" placeholder="Flat, suite, unit (optional)" />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="order-city">Town / City <span aria-hidden="true">*</span></label>
+              <input type="text" id="order-city" name="city" autocomplete="address-level2" required placeholder="e.g. London" />
+            </div>
+            <div class="form-group">
+              <label for="order-county">County</label>
+              <input type="text" id="order-county" name="county" autocomplete="address-level1" placeholder="e.g. Greater London" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="order-postcode">Postcode <span aria-hidden="true">*</span></label>
+              <input type="text" id="order-postcode" name="postcode" autocomplete="postal-code" required placeholder="e.g. SW1A 1AA"
+                     pattern="^[A-Za-z]{1,2}[0-9][0-9A-Za-z]?\s?[0-9][A-Za-z]{2}$" />
+            </div>
+            <div class="form-group">
+              <label for="order-country">Country</label>
+              <input type="text" id="order-country" name="country" autocomplete="country-name" value="United Kingdom" readonly />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="order-phone">Phone Number</label>
+            <input type="tel" id="order-phone" name="phone" autocomplete="tel" placeholder="e.g. 07700 900000" />
+          </div>
+        </fieldset>
+
+        <div class="form-summary" id="order-summary"></div>
+
+        <button type="submit" class="btn btn-primary btn-block" id="order-submit">Place Order</button>
+      </form>
+
+      <div class="order-success" id="order-success" hidden>
+        <div class="success-icon">✓</div>
+        <h3>Order Received!</h3>
+        <p id="order-success-msg"></p>
+        <button class="btn btn-outline" id="order-done-btn">Close</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ===== CTA BANNER ===== -->
   <section class="cta-banner">
     <div class="container cta-inner">
@@ -425,6 +588,7 @@
             <li><a href="#home">Home</a></li>
             <li><a href="#features">Features</a></li>
             <li><a href="#sample">Sample Questions</a></li>
+            <li><a href="#books">Books</a></li>
             <li><a href="#pricing">Membership</a></li>
           </ul>
         </div>
