@@ -10,6 +10,10 @@ build/
 .cache/
 .parcel-cache/
 
+# .NET build artifacts
+Api/bin/
+Api/obj/
+
 # Environment files
 .env
 .env.local

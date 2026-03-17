@@ -1,0 +1,24 @@
+@Api_HostAddress = http://localhost:5267
+
+POST {{Api_HostAddress}}/api/elastic/create-index
+Accept: application/json
+
+###
+
+POST {{Api_HostAddress}}/api/elastic/index-articles
+Content-Type: application/json
+
+[
+  {
+    "id": "1",
+    "title": "Sample Article",
+    "summary": "A brief summary",
+    "body": "Full article body text here.",
+    "author": "Jane Doe",
+    "tags": ["medicine", "oncology"],
+    "publishedAt": "2024-01-15T00:00:00Z",
+    "url": "https://example.com/sample-article"
+  }
+]
+
+###
