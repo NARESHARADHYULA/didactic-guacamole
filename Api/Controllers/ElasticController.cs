@@ -2,14 +2,41 @@ using Elastic.Clients.Elasticsearch;
 using Elastic.Transport;
 using Microsoft.AspNetCore.Mvc;
 using Api.Models;
+using Api.Services;
 
 namespace Api.Controllers;
 
 [ApiController]
 [Route("api/elastic")]
-public class ElasticController(ElasticsearchClient elastic, IConfiguration config, IWebHostEnvironment env) : ControllerBase
+public class ElasticController(
+    ElasticsearchClient elastic,
+    IConfiguration config,
+    IWebHostEnvironment env,
+    ElasticIndexingService indexingService,
+    ILogger<ElasticController> logger) : ControllerBase
 {
     private string IndexName => config["Elasticsearch:IndexName"] ?? "articles";
+
+    /// <summary>
+    /// Manually trigger a full reindex cycle:
+    /// creates a new timestamped index, indexes articles, swaps the alias, verifies, and deletes the old index.
+    /// </summary>
+    [HttpPost("reindex")]
+    public async Task<IActionResult> TriggerReindex(CancellationToken cancellationToken)
+    {
+        logger.LogInformation("Manual reindex triggered via API endpoint.");
+
+        var success = await indexingService.RunReindexAsync(cancellationToken);
+
+        if (success)
+        {
+            logger.LogInformation("Manual reindex completed successfully.");
+            return Ok(new { message = "Reindex completed successfully." });
+        }
+
+        logger.LogError("Manual reindex failed. Check application logs for details.");
+        return StatusCode(500, new { message = "Reindex failed. Check application logs for details." });
+    }
 
     [HttpPost("create-index")]
     public async Task<IActionResult> CreateIndex()
