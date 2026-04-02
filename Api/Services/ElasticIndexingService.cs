@@ -103,7 +103,9 @@ public class ElasticIndexingService
         var schemaPath = Path.Combine(_env.ContentRootPath, "elastic-index.json");
         if (!File.Exists(schemaPath))
         {
-            _logger.LogError("Index schema file not found at '{Path}'.", schemaPath);
+            _logger.LogError(
+                "Index schema file not found at '{Path}'. Ensure 'elastic-index.json' exists in the project root and is set to CopyToOutputDirectory.",
+                schemaPath);
             return false;
         }
 
