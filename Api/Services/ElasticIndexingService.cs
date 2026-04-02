@@ -184,11 +184,11 @@ public class ElasticIndexingService
             foreach (var prop in indexSettings.EnumerateObject())
             {
                 // Skip Elasticsearch auto-managed settings that cannot be set on index creation
-                if (prop.Name is "creation_date" or "uuid" or "version" or "provided_name"
-                    or "routing" or "history")
+                if (prop.Name is "creation_date" or "creation_date_string" or "uuid"
+                    or "version" or "provided_name" or "routing" or "history" or "lifecycle")
                     continue;
 
-                cleanSettings[prop.Name] = JsonSerializer.Deserialize<object>(prop.Value.GetRawText())!;
+                cleanSettings[prop.Name] = JsonSerializer.Deserialize<JsonElement>(prop.Value.GetRawText());
             }
 
             // Parse mappings: response is { "index_name": { "mappings": { ... } } }
@@ -197,11 +197,11 @@ public class ElasticIndexingService
                 .GetProperty(sourceIndex)
                 .GetProperty("mappings");
 
-            // Build the create-index request body with settings and mappings
+            // Build the create-index request body with settings nested under "index" and mappings
             var schema = new Dictionary<string, object>
             {
-                ["settings"] = cleanSettings,
-                ["mappings"] = JsonSerializer.Deserialize<object>(mappings.GetRawText())!
+                ["settings"] = new Dictionary<string, object> { ["index"] = cleanSettings },
+                ["mappings"] = JsonSerializer.Deserialize<JsonElement>(mappings.GetRawText())
             };
 
             var schemaJson = JsonSerializer.Serialize(schema);
